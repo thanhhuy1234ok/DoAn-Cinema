@@ -43,29 +43,29 @@ public class LoginWindowController extends BaseController {
         String password = tf_Password.getText();
 
         if (checkTextFied(username, password)) {
-            if (accountNVDao.checkAccount(viewFactory.getDbManager().getDBConnection(),username,password)) {
+            if (accountNVDao.checkAccount(viewFactory.getDbManager().getDBConnection(), username, password)) {
                 viewFactory.showMainAdmin();
-                Stage stage = (Stage)this.bt_Login.getScene().getWindow();
+                Stage stage = (Stage) this.bt_Login.getScene().getWindow();
                 this.viewFactory.closeStage(stage);
             }
-        }else {
+        } else {
             alterError(stError);
         }
     }
 
-    public boolean checkTextFied(String username, String password){
-        if (username.isEmpty()){
+    public boolean checkTextFied(String username, String password) {
+        if (username.isEmpty()) {
             stError = "Nhập tên đăng nhập";
             return false;
-        }else if(password.isEmpty()){
+        } else if (password.isEmpty()) {
             stError = "Nhập mật khẩu";
             return false;
-        }else
+        } else
             return true;
 
     }
 
-    public void  alterError(String st){
+    public void alterError(String st) {
         Alert alert = new Alert(Alert.AlertType.ERROR);
         alert.setHeaderText("Lỗi đăng nhập");
         alert.setContentText(st);

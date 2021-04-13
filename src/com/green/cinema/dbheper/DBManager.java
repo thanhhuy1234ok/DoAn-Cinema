@@ -16,7 +16,7 @@ public class DBManager {
 
     public Connection getDBConnection() {
 
-        if (connection != null){
+        if (connection != null) {
             return connection;
         }
         try {

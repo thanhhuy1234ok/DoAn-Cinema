@@ -20,9 +20,10 @@
               <MenuItem mnemonicParsing="false" text="Delete" />
             </items>
           </Menu>
-            <Menu mnemonicParsing="false" onAction="#menuManagerAction" text="Staff Management">
+            <Menu mnemonicParsing="false" text="Staff Management">
                <items>
-                  <MenuItem mnemonicParsing="false" text="Management" />
+                  <MenuItem mnemonicParsing="false" onAction="#menuRegistrationManagementAction" text="Registration Management" />
+                  <MenuItem mnemonicParsing="false" onAction="#menuManagementAction" text="Management" />
                   <MenuItem mnemonicParsing="false" text="Close" />
                </items>
             </Menu>

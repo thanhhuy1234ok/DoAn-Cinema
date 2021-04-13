@@ -16,13 +16,14 @@ import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.control.cell.TextFieldTableCell;
+import javafx.stage.Stage;
 
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.ResourceBundle;
 
 
-public class StaffManagerController extends  BaseController implements Initializable {
+public class StaffManagerController extends BaseController implements Initializable {
     public StaffManagerController(ViewFactory viewFactory, String fxmlName) {
         super(viewFactory, fxmlName);
     }
@@ -66,12 +67,8 @@ public class StaffManagerController extends  BaseController implements Initializ
     @FXML
     void buttonAddAction(ActionEvent event) {
         viewFactory.showAddWindow();
-
-//        int last_id =  managerDao.addNhanVien(viewFactory.getDbManager().getDBConnection(), staffManager);
-//        tableManager.refresh();
-//        staffManager.setId(last_id);
-//        listManager.add(staffManager);
-//        System.out.println("true");
+        Stage stage = (Stage) this.bt_Add.getScene().getWindow();
+        viewFactory.closeStage(stage);
     }
 
     @FXML
@@ -93,10 +90,6 @@ public class StaffManagerController extends  BaseController implements Initializ
         tb_Phone.setCellValueFactory(new PropertyValueFactory<StaffManager, Integer>("phone"));
         tb_Birth.setCellValueFactory(new PropertyValueFactory<StaffManager, String>("birth"));
         tb_Position.setCellValueFactory(new PropertyValueFactory<StaffManager, ComboBox>("position"));
-
-        tb_HoTen.setCellFactory(TextFieldTableCell.forTableColumn());
-        tb_Address.setCellFactory(TextFieldTableCell.forTableColumn());
-        tb_Email.setCellFactory(TextFieldTableCell.forTableColumn());
 
         ArrayList<StaffManager> listNV = managerDao.getAllManager(viewFactory.getDbManager().getDBConnection());
         listManager.setAll(listNV);

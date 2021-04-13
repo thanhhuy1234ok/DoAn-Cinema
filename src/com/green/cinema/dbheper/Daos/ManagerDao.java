@@ -19,7 +19,7 @@ public class ManagerDao {
     private static final String ADD_NHANVIEN = "INSERT INTO NHAN_VIEN (HOTEN, EMAIL, ADDRESS, Phone, DateofBirth, CHUC_VU) " +
             "VALUES ( ?, ?, ?, ?, ?, ?)";
 
-    private  static final String ADD_TK_NHANVIEN = "INSERT INTO TKNHANVIEN (EMAIL, PASS, ID_NHANVIEN) " +
+    private static final String ADD_TK_NHANVIEN = "INSERT INTO TKNHANVIEN (EMAIL, PASS, ID_NHANVIEN) " +
             "VALUES ( ?, ?, ?)";
 
 

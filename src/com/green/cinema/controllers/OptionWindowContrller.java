@@ -45,7 +45,7 @@ public class OptionWindowContrller extends BaseController implements Initializab
 
     @FXML
     void buttonActionApply(ActionEvent event) {
-        System.out.println(TAG +"buttonActionApply");
+        System.out.println(TAG + "buttonActionApply");
         closeStage();
     }
 
@@ -55,7 +55,7 @@ public class OptionWindowContrller extends BaseController implements Initializab
         closeStage();
     }
 
-    private void closeStage(){
+    private void closeStage() {
         Stage stage = (Stage) buttonApply.getScene().getWindow();
         viewFactory.closeStage(stage);
     }
@@ -67,7 +67,7 @@ public class OptionWindowContrller extends BaseController implements Initializab
         initSliderFontSize();
     }
 
-    private void initSliderFontSize(){
+    private void initSliderFontSize() {
         SliderFont.setMin(0);
         SliderFont.setMax(FontSize.values().length - 1);
         SliderFont.setValue(viewFactory.getFontSize().ordinal());
@@ -92,7 +92,7 @@ public class OptionWindowContrller extends BaseController implements Initializab
 
     }
 
-    private void initChoiceBoxTheme(){
+    private void initChoiceBoxTheme() {
         BoxColor.setItems(FXCollections.observableArrayList(ColorTheme.values()));
         BoxColor.setValue(viewFactory.getColorTheme());
 

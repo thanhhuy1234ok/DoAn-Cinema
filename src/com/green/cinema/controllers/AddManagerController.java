@@ -28,10 +28,10 @@ public class AddManagerController extends BaseController implements Initializabl
     }
 
     ManagerDao managerDao = new ManagerDao();
-    private static Boolean windowIsClosed = false;
     ObservableList<StaffManager> listmanagers;
     StaffManager manager;
     private int currentIndex = 0;
+    private Staff staff = Staff.POSSITION;
 
 
     @FXML
@@ -70,20 +70,22 @@ public class AddManagerController extends BaseController implements Initializabl
         manager.setBirth(datePicker_Birth.getValue().toString());
         manager.setPosition(BoxStaff.getValue().toString());
 
-        int last_id = managerDao.addNhanVien(viewFactory.getDbManager().getDBConnection(), manager);
-        manager.setId(last_id);
-        listmanagers.add(manager);
-        System.out.println("add true");
         Stage stage = (Stage) this.bt_Ok.getScene().getWindow();
         viewFactory.closeStage(stage);
 
 
-    }
+        int last_id = managerDao.addNhanVien(viewFactory.getDbManager().getDBConnection(), manager);
+        manager.setId(last_id);
+        listmanagers.add(manager);
+        System.out.println("add true");
 
+
+    }
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         initChoiceBoxTheme();
+
     }
 
     private void initChoiceBoxTheme() {
@@ -91,5 +93,4 @@ public class AddManagerController extends BaseController implements Initializabl
         BoxStaff.setValue(viewFactory.getStaff());
 
     }
-
 }

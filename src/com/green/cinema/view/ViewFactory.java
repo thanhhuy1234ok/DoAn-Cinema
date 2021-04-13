@@ -20,49 +20,62 @@ public class ViewFactory {
     private Staff staff = Staff.POSSITION;
 
     private DBManager dbManager;
-    public DBManager getDbManager(){
+
+    public DBManager getDbManager() {
         return dbManager;
     }
 
-    public ViewFactory(DBManager dbManager){
+    public ViewFactory(DBManager dbManager) {
         this.dbManager = dbManager;
     }
 
-    public void showLoginWindow(){
+    public void showLoginWindow() {
         System.out.println("Show Login Window");
-        BaseController controller = new LoginWindowController(this,"LoginWindow.fxml");
+        BaseController controller = new LoginWindowController(this, "LoginWindow.fxml");
         initializeStage(controller);
     }
 
-    public void showMainAdmin(){
+    public void showMainAdmin() {
         System.out.println("Show Main Window");
-        BaseController controller = new MainAdmin(this,"MainWindowAdmin.fxml");
+        BaseController controller = new MainAdmin(this, "MainWindowAdmin.fxml");
         initializeStage(controller);
     }
 
-    public void showOptionWidow(){
+    public void showOptionWidow() {
         System.out.println("Show Main Window");
-        BaseController controller = new OptionWindowContrller(this,"OptionWindow.fxml");
+        BaseController controller = new OptionWindowContrller(this, "OptionWindow.fxml");
         initializeStage(controller, true);
     }
 
-    public void showStaffWindow(){
+    public void showStaffWindow() {
         System.out.println("Show Staff Window");
-        BaseController controller = new StaffManagerController(this,"StaffManager.fxml");
-        initializeStage(controller, true);
+        BaseController controller = new StaffManagerController(this, "StaffManager.fxml");
+        initializeStage(controller);
     }
 
-    public void showAddWindow(){
+    public void showRegistrationWindow() {
+        System.out.println("Show Regítration Window");
+        BaseController controller = new RegistrationManagementCotronller(this, "RegistrationManagement.fxml");
+        initializeStage(controller);
+    }
+
+    public void showAddWindow() {
         System.out.println("Show Add Window");
-        BaseController controller = new AddManagerController(this,"AddManager.fxml");
+        BaseController controller = new AddManagerController(this, "AddManager.fxml");
         initializeStage(controller, true);
     }
 
-    public void closeStage(Stage stage){
+    public void showMovieWindow() {
+        System.out.println("Show Movie Window");
+        BaseController controller = new MovieManagementController(this, "MovieManagement.fxml");
+        initializeStage(controller);
+    }
+
+    public void closeStage(Stage stage) {
         stage.close();
     }
 
-    private void initializeStage(BaseController controller){
+    private void initializeStage(BaseController controller) {
         initializeStage(controller, false);
     }
 
@@ -81,8 +94,9 @@ public class ViewFactory {
 
         Scene scene = new Scene(parent);
         Stage stage = new Stage();
-        if (isModal == true){
-            stage.initModality(Modality.APPLICATION_MODAL);}
+        if (isModal == true) {
+            stage.initModality(Modality.APPLICATION_MODAL);
+        }
         stage.setScene(scene);
         stage.show();
     }
