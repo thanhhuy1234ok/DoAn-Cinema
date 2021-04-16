@@ -59,7 +59,7 @@ public class ViewFactory {
         initializeStage(controller);
     }
 
-    public void showAddWindow() {
+    public void showAddManagerWindow() {
         System.out.println("Show Add Window");
         BaseController controller = new AddManagerController(this, "AddManager.fxml");
         initializeStage(controller, true);
@@ -68,6 +68,18 @@ public class ViewFactory {
     public void showMovieWindow() {
         System.out.println("Show Movie Window");
         BaseController controller = new MovieManagementController(this, "MovieManagement.fxml");
+        initializeStage(controller);
+    }
+
+    public void showAddMovieWindow() {
+        System.out.println("Show add Movie Window");
+        BaseController controller = new AddMovieController(this, "AddMovie.fxml");
+        initializeStage(controller);
+    }
+
+    public void showMainManagerWindow() {
+        System.out.println("Show Main manager Window");
+        BaseController controller = new MainManagerController(this, "MainManager.fxml");
         initializeStage(controller);
     }
 

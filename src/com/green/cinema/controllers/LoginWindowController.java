@@ -23,6 +23,7 @@ public class LoginWindowController extends BaseController {
 
     AccountNVDao accountNVDao = new AccountNVDao();
     String stError = "";
+    AccountNV accountNV = new AccountNV() ;
 
 
     @FXML
@@ -43,11 +44,16 @@ public class LoginWindowController extends BaseController {
         String password = tf_Password.getText();
 
         if (checkTextFied(username, password)) {
-            if (accountNVDao.checkAccount(viewFactory.getDbManager().getDBConnection(), username, password)) {
-                viewFactory.showMainAdmin();
-                Stage stage = (Stage) this.bt_Login.getScene().getWindow();
-                this.viewFactory.closeStage(stage);
-            }
+            viewFactory.showMainAdmin();
+            Stage stage = (Stage) this.bt_Login.getScene().getWindow();
+            this.viewFactory.closeStage(stage);
+            /*if (accountNVDao.checkAccount(viewFactory.getDbManager().getDBConnection(), username, password)) {
+                if(accountNVDao.accountTypr(viewFactory.getDbManager().getDBConnection()) ){
+                    viewFactory.showMainManagerWindow();
+                }else {
+
+                }
+            }*/
         } else {
             alterError(stError);
         }

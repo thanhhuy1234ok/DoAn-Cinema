@@ -19,7 +19,7 @@
             <TableColumn fx:id="tb_Position" prefWidth="104.79998779296875" text="Positon" />
         </columns>
       </TableView>
-      <Button fx:id="bt_Add" layoutX="1016.0" layoutY="392.0" mnemonicParsing="false" onAction="#buttonAddAction" text="Add">
+      <Button fx:id="bt_Add" layoutX="1023.0" layoutY="392.0" mnemonicParsing="false" onAction="#buttonAddAction" text="Add">
          <font>
             <Font size="20.0" />
          </font>

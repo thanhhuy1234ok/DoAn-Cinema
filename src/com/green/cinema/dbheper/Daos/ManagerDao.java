@@ -10,17 +10,11 @@ import java.util.ArrayList;
 public class ManagerDao {
 
     private static final String QUERY_NHANVIEN = "SELECT * FROM NHAN_VIEN ";
-
-    private static final String UPDATE_TBL_VALUE = "UPDATE NHAN_VIEN SET HOTEN = ?, EMAIL = ?, ADDRESS = ?, Phone = ?, DateofBirth = ?  ,CHUCVU = ? " +
-            "WHERE (ID = ?)";
-
-    private static final String DELETE_TBL_NHANVIEN = "DELETE FROM NHAN_VIEN WHERE (`ID` = ?);";
-
     private static final String ADD_NHANVIEN = "INSERT INTO NHAN_VIEN (HOTEN, EMAIL, ADDRESS, Phone, DateofBirth, CHUC_VU) " +
             "VALUES ( ?, ?, ?, ?, ?, ?)";
-
-    private static final String ADD_TK_NHANVIEN = "INSERT INTO TKNHANVIEN (EMAIL, PASS, ID_NHANVIEN) " +
-            "VALUES ( ?, ?, ?)";
+    private static final String UPDATE_TBL_VALUE = "UPDATE NHAN_VIEN SET HOTEN = ?, ADDRESS = ?, Phone = ?, DateofBirth = ?, CHUC_VU =?" +
+            "WHERE (ID = ?)";
+    private static final String DELETE_TBL_NHANVIEN = "DELETE FROM NHAN_VIEN WHERE (`ID` = ?);";
 
 
     public ArrayList<StaffManager> getAllManager(Connection connection) {
@@ -121,21 +115,19 @@ public class ManagerDao {
         }
     }
 
-    public int updateNhanVien(Connection connection, StaffManager manager) {
-        int result = 0;
+    public void updateNhanVien(Connection connection, int id, String hoTen, String address, int phone, String birth, String position) {
         PreparedStatement preparedStatement = null;
 
         try {
             preparedStatement = connection.prepareStatement(UPDATE_TBL_VALUE);
-            preparedStatement.setString(1, manager.getHoTen());
-            preparedStatement.setString(2, manager.getEmail());
-            preparedStatement.setString(3, manager.getAddress());
-            preparedStatement.setInt(4, manager.getPhone());
-            preparedStatement.setString(5, manager.getBirth());
-            preparedStatement.setString(6, manager.getPosition());
+            preparedStatement.setString(1, hoTen);
+            preparedStatement.setString(2, address);
+            preparedStatement.setInt(3, phone);
+            preparedStatement.setString(4, birth);
+            preparedStatement.setString(5, position);
+            preparedStatement.setInt(6, id);
             preparedStatement.executeUpdate();
         } catch (SQLException exception) {
-            result = -1;
             System.out.println("update exception: " + exception.getMessage());
             System.out.println("update NhanVien");
         } finally {
@@ -146,8 +138,6 @@ public class ManagerDao {
                     exception.printStackTrace();
                 }
             }
-
-            return result;
         }
     }
 }

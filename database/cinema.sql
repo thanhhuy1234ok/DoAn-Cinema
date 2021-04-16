@@ -5,11 +5,14 @@ use cinema;
 DROP TABLE IF EXISTS PHIM;
 CREATE TABLE Phim( 
 ID INT NOT NULL PRIMARY KEY AUTO_INCREMENT, 
-TEN_PHIM VARCHAR(60) NOT NULL, 
-THOI_LUONG INT,
+TEN_PHIM VARCHAR(60) NOT NULL,
+QUOC_GIA VARCHAR(20) NOT NULL, 
+THOI_LUONG VARCHAR(10) not null,
 THE_LOAI VARCHAR(50) NOT NULL,
-DAO_DIEN VARCHAR(50) NOT NULL, 
-NGAY date);
+DIEN_VIEN VARCHAR(50) NOT NULL, 
+NGAY date,
+SO_LUONG_VE INT NOT NULL
+);
 
 -- insert into PHIM(TEN_PHIM, THOI_LUONG, THE_LOAI, DAO_DIEN, NGAY) values
 -- ('Bố Già', 128, 'Gia đình, Hài' ,'Vũ Ngọc Đãng & Trấn Thành', date('2021-03-12')),
@@ -17,13 +20,15 @@ NGAY date);
 
 DROP TABLE IF EXISTS TKNHANVIEN;
 CREATE TABLE TKNHANVIEN( 
+Id int,
 EMAIL VARCHAR(60) NOT NULL, 
 PASS VARCHAR(20) NOT NULL,
-ID_NHANVIEN int,
-PRIMARY KEY (EMAIL));
+ID_NHANVIEN varchar(10),
+PRIMARY KEY (EMAIL)
+);
 
--- insert into TKNHANVIEN(EMAIL, PASS) values
--- ('admin', 123),
+ insert into TKNHANVIEN(EMAIL, PASS,ID_NHANVIEN) values
+ ('admin', 123, 'POSISON');
 -- ('kien233@gmail.com', 123),
 -- ('hung4561@gmail.com', 123),
 -- ('nguyenthuytien213@gmail.com', 123);
@@ -38,7 +43,8 @@ Phone int,
 DateofBirth date,
 CHUC_VU VARCHAR(20),
 PRIMARY KEY (ID),
-foreign key (EMAIL) references TKNHANVIEN(EMAIL));
+foreign key (EMAIL) references TKNHANVIEN(EMAIL)
+);
 
 -- insert into NHAN_VIEN(HOTEN, EMAIL, CHUC_VU) values
 -- ('Trần thị thủy', 'nguyethuy@gmail.com','quản lí'),

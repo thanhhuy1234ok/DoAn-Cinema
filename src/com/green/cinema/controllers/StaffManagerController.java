@@ -1,6 +1,7 @@
 package com.green.cinema.controllers;
 
 import com.green.cinema.dbheper.Daos.ManagerDao;
+import com.green.cinema.models.Movie;
 import com.green.cinema.models.StaffManager;
 import com.green.cinema.view.ViewFactory;
 import javafx.collections.FXCollections;
@@ -50,13 +51,13 @@ public class StaffManagerController extends BaseController implements Initializa
     private TableColumn<StaffManager, String> tb_Address;
 
     @FXML
-    private TableColumn<StaffManager, Integer> tb_Phone;
+    private TableColumn<StaffManager, String> tb_Phone;
 
     @FXML
     private TableColumn<StaffManager, String> tb_Birth;
 
     @FXML
-    private TableColumn<StaffManager, ComboBox> tb_Position;
+    private TableColumn<StaffManager, String> tb_Position;
 
     @FXML
     private Button bt_Add;
@@ -66,7 +67,7 @@ public class StaffManagerController extends BaseController implements Initializa
 
     @FXML
     void buttonAddAction(ActionEvent event) {
-        viewFactory.showAddWindow();
+        viewFactory.showAddManagerWindow();
         Stage stage = (Stage) this.bt_Add.getScene().getWindow();
         viewFactory.closeStage(stage);
     }
@@ -75,28 +76,18 @@ public class StaffManagerController extends BaseController implements Initializa
     void buttonDelAction(ActionEvent event) {
         StaffManager seleted = tableManager.getSelectionModel().getSelectedItem();
         listManager.remove(seleted);
+        tableManager.refresh();
         managerDao.deletenhanvien(viewFactory.getDbManager().getDBConnection(), seleted.getId());
     }
 
-
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        listManager = FXCollections.observableArrayList();
-
-        tb_ID.setCellValueFactory(new PropertyValueFactory<StaffManager, Integer>("id"));
-        tb_HoTen.setCellValueFactory(new PropertyValueFactory<StaffManager, String>("hoTen"));
-        tb_Email.setCellValueFactory(new PropertyValueFactory<StaffManager, String>("email"));
-        tb_Address.setCellValueFactory(new PropertyValueFactory<StaffManager, String>("address"));
-        tb_Phone.setCellValueFactory(new PropertyValueFactory<StaffManager, Integer>("phone"));
-        tb_Birth.setCellValueFactory(new PropertyValueFactory<StaffManager, String>("birth"));
-        tb_Position.setCellValueFactory(new PropertyValueFactory<StaffManager, ComboBox>("position"));
+        prinftableManager();
 
         ArrayList<StaffManager> listNV = managerDao.getAllManager(viewFactory.getDbManager().getDBConnection());
         listManager.setAll(listNV);
 
-        tableManager.setItems(listManager);
         tableManager.getSelectionModel().select(currentIndex);
-
         tableManager.getSelectionModel().getSelectedIndices().addListener(new ListChangeListener<Integer>() {
             @Override
             public void onChanged(Change<? extends Integer> change) {
@@ -106,4 +97,121 @@ public class StaffManagerController extends BaseController implements Initializa
             }
         });
     }
+
+    public void prinftableManager() {
+        listManager = FXCollections.observableArrayList();
+
+        tableManager.setEditable(true);
+
+        tb_ID.setCellValueFactory(new PropertyValueFactory<StaffManager, Integer>("id"));
+        tb_HoTen.setCellValueFactory(new PropertyValueFactory<StaffManager, String>("hoTen"));
+        editNameCell();
+        tb_Email.setCellValueFactory(new PropertyValueFactory<StaffManager, String>("email"));
+        tb_Address.setCellValueFactory(new PropertyValueFactory<StaffManager, String>("address"));
+        editAddressCell();
+        tb_Phone.setCellValueFactory(new PropertyValueFactory<StaffManager, String>("phone"));
+        tb_Birth.setCellValueFactory(new PropertyValueFactory<StaffManager, String>("birth"));
+        editbirthCell();
+        tb_Position.setCellValueFactory(new PropertyValueFactory<StaffManager, String>("position"));
+        editChucVuCell();
+
+        tableManager.setItems(listManager);
+    }
+
+
+    private void editNameCell (){
+        tb_HoTen.setCellFactory(TextFieldTableCell.forTableColumn());
+        tb_HoTen.setOnEditCommit(new EventHandler<TableColumn.CellEditEvent<StaffManager, String>>() {
+            @Override
+            public void handle(TableColumn.CellEditEvent<StaffManager, String> cellEditing) {
+                ((StaffManager) cellEditing.getTableView().getItems().get(cellEditing.getTablePosition().getRow())).setHoTen(cellEditing.getNewValue());
+
+                managerDao.updateNhanVien(viewFactory.getDbManager().getDBConnection(),
+                        ((StaffManager) cellEditing.getTableView().getItems().get(cellEditing.getTablePosition().getRow())).getId(),
+                        ((StaffManager) cellEditing.getTableView().getItems().get(cellEditing.getTablePosition().getRow())).getHoTen(),
+                        ((StaffManager) cellEditing.getTableView().getItems().get(cellEditing.getTablePosition().getRow())).getAddress(),
+                        ((StaffManager) cellEditing.getTableView().getItems().get(cellEditing.getTablePosition().getRow())).getPhone(),
+                        ((StaffManager) cellEditing.getTableView().getItems().get(cellEditing.getTablePosition().getRow())).getBirth(),
+                        ((StaffManager) cellEditing.getTableView().getItems().get(cellEditing.getTablePosition().getRow())).getPosition()
+                );
+            }
+        });
+    }
+
+    private void editAddressCell (){
+        tb_Address.setCellFactory(TextFieldTableCell.forTableColumn());
+        tb_Address.setOnEditCommit(new EventHandler<TableColumn.CellEditEvent<StaffManager, String>>() {
+            @Override
+            public void handle(TableColumn.CellEditEvent<StaffManager, String> cellEditing) {
+                ((StaffManager) cellEditing.getTableView().getItems().get(cellEditing.getTablePosition().getRow())).setAddress(cellEditing.getNewValue());
+
+                managerDao.updateNhanVien(viewFactory.getDbManager().getDBConnection(),
+                        ((StaffManager) cellEditing.getTableView().getItems().get(cellEditing.getTablePosition().getRow())).getId(),
+                        ((StaffManager) cellEditing.getTableView().getItems().get(cellEditing.getTablePosition().getRow())).getHoTen(),
+                        ((StaffManager) cellEditing.getTableView().getItems().get(cellEditing.getTablePosition().getRow())).getAddress(),
+                        ((StaffManager) cellEditing.getTableView().getItems().get(cellEditing.getTablePosition().getRow())).getPhone(),
+                        ((StaffManager) cellEditing.getTableView().getItems().get(cellEditing.getTablePosition().getRow())).getBirth(),
+                        ((StaffManager) cellEditing.getTableView().getItems().get(cellEditing.getTablePosition().getRow())).getPosition()
+                );
+            }
+        });
+    }
+
+//    private void editPhoneCell (){
+//        tb_Phone.setCellFactory(TextFieldTableCell.forTableColumn());
+//        tb_Phone.setOnEditCommit(new EventHandler<TableColumn.CellEditEvent<StaffManager, String>>() {
+//            @Override
+//            public void handle(TableColumn.CellEditEvent<StaffManager, String> cellEditing) {
+//               ((StaffManager) cellEditing.getTableView().getItems().get(cellEditing.getTablePosition().getRow())).setPhone(cellEditing.getNewValue().toString());
+//
+//                managerDao.updateNhanVien(viewFactory.getDbManager().getDBConnection(),
+//                        ((StaffManager) cellEditing.getTableView().getItems().get(cellEditing.getTablePosition().getRow())).getId(),
+//                        ((StaffManager) cellEditing.getTableView().getItems().get(cellEditing.getTablePosition().getRow())).getHoTen(),
+//                        ((StaffManager) cellEditing.getTableView().getItems().get(cellEditing.getTablePosition().getRow())).getAddress(),
+//                        ((StaffManager) cellEditing.getTableView().getItems().get(cellEditing.getTablePosition().getRow())).getPhone(),
+//                        ((StaffManager) cellEditing.getTableView().getItems().get(cellEditing.getTablePosition().getRow())).getBirth(),
+//                        ((StaffManager) cellEditing.getTableView().getItems().get(cellEditing.getTablePosition().getRow())).getPosition()
+//                );
+//            }
+//        });
+//    }
+
+    private void editbirthCell (){
+        tb_Birth.setCellFactory(TextFieldTableCell.forTableColumn());
+        tb_Birth.setOnEditCommit(new EventHandler<TableColumn.CellEditEvent<StaffManager, String>>() {
+            @Override
+            public void handle(TableColumn.CellEditEvent<StaffManager, String> cellEditing) {
+                ((StaffManager) cellEditing.getTableView().getItems().get(cellEditing.getTablePosition().getRow())).setBirth(cellEditing.getNewValue());
+
+                managerDao.updateNhanVien(viewFactory.getDbManager().getDBConnection(),
+                        ((StaffManager) cellEditing.getTableView().getItems().get(cellEditing.getTablePosition().getRow())).getId(),
+                        ((StaffManager) cellEditing.getTableView().getItems().get(cellEditing.getTablePosition().getRow())).getHoTen(),
+                        ((StaffManager) cellEditing.getTableView().getItems().get(cellEditing.getTablePosition().getRow())).getAddress(),
+                        ((StaffManager) cellEditing.getTableView().getItems().get(cellEditing.getTablePosition().getRow())).getPhone(),
+                        ((StaffManager) cellEditing.getTableView().getItems().get(cellEditing.getTablePosition().getRow())).getBirth(),
+                        ((StaffManager) cellEditing.getTableView().getItems().get(cellEditing.getTablePosition().getRow())).getPosition()
+                );
+            }
+        });
+    }
+
+    private void editChucVuCell (){
+        tb_Position.setCellFactory(TextFieldTableCell.forTableColumn());
+        tb_Position.setOnEditCommit(new EventHandler<TableColumn.CellEditEvent<StaffManager, String>>() {
+            @Override
+            public void handle(TableColumn.CellEditEvent<StaffManager, String> cellEditing) {
+                ((StaffManager) cellEditing.getTableView().getItems().get(cellEditing.getTablePosition().getRow())).setPosition(cellEditing.getNewValue());
+
+                managerDao.updateNhanVien(viewFactory.getDbManager().getDBConnection(),
+                        ((StaffManager) cellEditing.getTableView().getItems().get(cellEditing.getTablePosition().getRow())).getId(),
+                        ((StaffManager) cellEditing.getTableView().getItems().get(cellEditing.getTablePosition().getRow())).getHoTen(),
+                        ((StaffManager) cellEditing.getTableView().getItems().get(cellEditing.getTablePosition().getRow())).getAddress(),
+                        ((StaffManager) cellEditing.getTableView().getItems().get(cellEditing.getTablePosition().getRow())).getPhone(),
+                        ((StaffManager) cellEditing.getTableView().getItems().get(cellEditing.getTablePosition().getRow())).getBirth(),
+                        ((StaffManager) cellEditing.getTableView().getItems().get(cellEditing.getTablePosition().getRow())).getPosition()
+                );
+            }
+        });
+    }
+
 }

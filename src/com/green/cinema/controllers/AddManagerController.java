@@ -32,6 +32,7 @@ public class AddManagerController extends BaseController implements Initializabl
     StaffManager manager;
     private int currentIndex = 0;
     private Staff staff = Staff.POSSITION;
+    StaffManagerController controller ;
 
 
     @FXML
@@ -70,16 +71,14 @@ public class AddManagerController extends BaseController implements Initializabl
         manager.setBirth(datePicker_Birth.getValue().toString());
         manager.setPosition(BoxStaff.getValue().toString());
 
-        Stage stage = (Stage) this.bt_Ok.getScene().getWindow();
-        viewFactory.closeStage(stage);
-
-
         int last_id = managerDao.addNhanVien(viewFactory.getDbManager().getDBConnection(), manager);
+
         manager.setId(last_id);
         listmanagers.add(manager);
         System.out.println("add true");
 
-
+        Stage stage = (Stage) this.bt_Ok.getScene().getWindow();
+        viewFactory.closeStage(stage);
     }
 
     @Override

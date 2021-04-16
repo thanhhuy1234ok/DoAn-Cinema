@@ -14,6 +14,8 @@ public class AccountNVDao {
     private static final String QUERY_TK = "SELECT * FROM tknhanvien";
     private static final String ADD_TK_NHANVIEN = "INSERT INTO tknhanvien (EMAIL, PASS, ID_NHANVIEN) " +
             "VALUES ( ?, ?, ?)";
+    private static final String FIND_ACCOUNT_TYPE = "select count(*) from tknhanvien" +
+            "where ID_NHANVIEN = MANAGER ";
 
     public AccountNVDao() {
     }
@@ -120,5 +122,29 @@ public class AccountNVDao {
             }
         }
         return autoIncKeyFromFunc;
+    }
+
+    public boolean accountTypr(Connection connection) {
+        try {
+            PreparedStatement ps = connection.prepareStatement(FIND_ACCOUNT_TYPE);
+            ResultSet queryresut = ps.executeQuery();
+            while (queryresut.next()) {
+                if (queryresut.getInt(1) > 1) {
+                    return true;
+                } else {
+                    stError = "Sai tên đăng nhập hoặc mật khẩu";
+                    alterError(stError);
+                    return false;
+
+                }
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+            e.getCause();
+            stError = "Lỗi đăng nhập";
+            alterError(stError);
+            return false;
+        }
+        return false;
     }
 }
