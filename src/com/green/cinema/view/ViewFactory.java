@@ -77,9 +77,9 @@ public class ViewFactory {
         initializeStage(controller);
     }
 
-    public void showMainManagerWindow() {
-        System.out.println("Show Main manager Window");
-        BaseController controller = new MainManagerController(this, "MainManager.fxml");
+    public void showMainStaffWindow() {
+        System.out.println("Show Main Staff Window");
+        BaseController controller = new MainManagerController(this, "MainStaff.fxml");
         initializeStage(controller);
     }
 
